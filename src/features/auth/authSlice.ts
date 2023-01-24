@@ -20,14 +20,14 @@ const initialState: AUTH_STATE = {
   profiles: [{ id: 0, user_profile: 0, img: null }],
 };
 
-export const counterSlice = createSlice({
-  name: "counter",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {},
 });
 
-export const {} = counterSlice.actions;
+export const {} = authSlice.actions;
 
 export const selectCount = (state: RootState) => state.counter.value;
 
-export default counterSlice.reducer;
+export default authSlice.reducer;
