@@ -180,8 +180,86 @@ export const taskSlice = createSlice({
       state.selectedTask = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchAsyncGetTasks.fulfilled,
+      (state, action: PayloadAction<READ_TASK[]>) => {
+        return {
+          ...state,
+          tasks: action.payload,
+        };
+      }
+    );
+    builder.addCase(fetchAsyncGetTasks.rejected, () => {
+      window.location.href = "/";
+    });
+    builder.addCase(
+      fetchAsyncGetUsers.fulfilled,
+      (state, action: PayloadAction<USER[]>) => {
+        return {
+          ...state,
+          users: action.payload,
+        };
+      }
+    );
+    builder.addCase(
+      fetchAsyncGetCategory.fulfilled,
+      (state, action: PayloadAction<CATEGORY[]>) => {
+        return {
+          ...state,
+          category: action.payload,
+        };
+      }
+    );
+    builder.addCase(
+      fetchAsyncCreateCategory.fulfilled,
+      (state, action: PayloadAction<CATEGORY>) => {
+        return {
+          ...state,
+          category: [...state.category, action.payload],
+        };
+      }
+    );
+    builder.addCase(fetchAsyncCreateCategory.rejected, () => {
+      window.location.href = "/";
+    });
+    builder.addCase(
+      fetchAsyncUpdateTask.fulfilled,
+      (state, action: PayloadAction<READ_TASK>) => {
+        return {
+          ...state,
+          tasks: state.tasks.map((t) =>
+            t.id === action.payload.id ? action.payload : t
+          ),
+          editedTask: initialState.editedTask,
+          selectedTask: initialState.selectedTask,
+        };
+      }
+    );
+    builder.addCase(fetchAsyncUpdateTask.rejected, () => {
+      window.location.href = "/";
+    });
+    builder.addCase(
+      fetchAsyncDeleteTask.fulfilled,
+      (state, action: PayloadAction<number>) => {
+        return {
+          ...state,
+          tasks: state.tasks.filter((t) => t.id !== action.payload),
+          editedTask: initialState.editedTask,
+          selectedTask: initialState.selectedTask,
+        };
+      }
+    );
+    builder.addCase(fetchAsyncDeleteTask.rejected, () => {
+      window.location.href = "/";
+    });
+  },
 });
 
 export const { editTask, selectTask } = taskSlice.actions;
-
+export const selectSelectedTask = (state: RootState) => state.task.selectedTask;
+export const selectEditedTask = (state: RootState) => state.task.editedTask;
+export const selectTasks = (state: RootState) => state.task.tasks;
+export const selectUsers = (state: RootState) => state.task.users;
+export const selectCategory = (state: RootState) => state.task.category;
 export default taskSlice.reducer;
