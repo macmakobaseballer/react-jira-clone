@@ -224,6 +224,19 @@ export const taskSlice = createSlice({
       window.location.href = "/";
     });
     builder.addCase(
+      fetchAsyncCreateTask.fulfilled,
+      (state, action: PayloadAction<READ_TASK>) => {
+        return {
+          ...state,
+          tasks: [action.payload, ...state.tasks],
+          editedTask: initialState.editedTask,
+        };
+      }
+    );
+    builder.addCase(fetchAsyncCreateTask.rejected, () => {
+      window.location.href = "/";
+    });
+    builder.addCase(
       fetchAsyncUpdateTask.fulfilled,
       (state, action: PayloadAction<READ_TASK>) => {
         return {
