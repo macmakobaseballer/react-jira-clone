@@ -194,15 +194,15 @@ const TaskList: React.FC = () => {
                 <TableCell>
                   <Avatar
                     className={classes.small}
-                    alt="resp"
-                    src={conditionalSrc(row["responsible"])}
+                    alt="owner"
+                    src={conditionalSrc(row["owner"])}
                   />
                 </TableCell>
                 <TableCell>
                   <Avatar
                     className={classes.small}
-                    alt="owner"
-                    src={conditionalSrc(row["owner"])}
+                    alt="resp"
+                    src={conditionalSrc(row["responsible"])}
                   />
                 </TableCell>
 
